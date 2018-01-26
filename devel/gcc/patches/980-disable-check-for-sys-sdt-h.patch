@@ -1,0 +1,52 @@
+--- a/gcc/configure
++++ b/gcc/configure
+@@ -8464,7 +8464,7 @@ fi
+ 
+ for ac_header in limits.h stddef.h string.h strings.h stdlib.h time.h iconv.h \
+ 		 fcntl.h ftw.h unistd.h sys/file.h sys/time.h sys/mman.h \
+-		 sys/resource.h sys/param.h sys/times.h sys/stat.h \
++		 sys/resource.h sys/param.h sys/times.h sys/sdt.h sys/stat.h \
+ 		 direct.h malloc.h langinfo.h ldfcn.h locale.h wchar.h
+ do :
+   as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
+@@ -27891,20 +27891,6 @@ $as_echo "#define TARGET_LIBC_PROVIDES_S
+ 
+ fi
+ 
+-# Test for <sys/sdt.h> on the target.
+-
+-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking sys/sdt.h in the target C library" >&5
+-$as_echo_n "checking sys/sdt.h in the target C library... " >&6; }
+-have_sys_sdt_h=no
+-if test -f $target_header_dir/sys/sdt.h; then
+-  have_sys_sdt_h=yes
+-
+-$as_echo "#define HAVE_SYS_SDT_H 1" >>confdefs.h
+-
+-fi
+-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $have_sys_sdt_h" >&5
+-$as_echo "$have_sys_sdt_h" >&6; }
+-
+ # Check if TFmode long double should be used by default or not.
+ # Some glibc targets used DFmode long double, but with glibc 2.4
+ # and later they can use TFmode.
+--- a/gcc/configure.ac
++++ b/gcc/configure.ac
+@@ -5330,17 +5330,6 @@ if test x$gcc_cv_libc_provides_ssp = xye
+ 	    [Define if your target C library provides stack protector support])
+ fi
+ 
+-# Test for <sys/sdt.h> on the target.
+-GCC_TARGET_TEMPLATE([HAVE_SYS_SDT_H])
+-AC_MSG_CHECKING(sys/sdt.h in the target C library)
+-have_sys_sdt_h=no
+-if test -f $target_header_dir/sys/sdt.h; then
+-  have_sys_sdt_h=yes
+-  AC_DEFINE(HAVE_SYS_SDT_H, 1,
+-            [Define if your target C library provides sys/sdt.h])
+-fi
+-AC_MSG_RESULT($have_sys_sdt_h)
+-
+ # Check if TFmode long double should be used by default or not.
+ # Some glibc targets used DFmode long double, but with glibc 2.4
+ # and later they can use TFmode.
